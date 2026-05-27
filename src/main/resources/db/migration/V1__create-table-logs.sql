@@ -1,0 +1,5 @@
+CREATE TABLE `logs` (
+    `id` BIGINT AUTO_INCREMENT,
+    `content` TEXT NOT NULL,
+    CONSTRAINT LOGS_PK PRIMARY KEY (`id`)
+) ENGINE InnoDB;
