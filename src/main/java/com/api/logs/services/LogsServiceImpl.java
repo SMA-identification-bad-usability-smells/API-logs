@@ -25,7 +25,7 @@ public class LogsServiceImpl implements LogsService{
     public void createLogs(LogsDTO newLogsDTO) {
         try{
             List<Logs> logs = parseLogString(newLogsDTO.getContent());
-
+//            System.out.println(logs.getFirst().toString());
             logs.forEach(log ->
                     logsRepository.save(log));
         } catch (Exception e) {
@@ -36,7 +36,7 @@ public class LogsServiceImpl implements LogsService{
     public static List<Logs> parseLogString(String jsonLogs) {
         List<Logs> resultList = new ArrayList<>();
 
-        String regex = "\"type\":\"([^\"]+)\",\"timestamp\":\"([^\"]+)\",\"coordinates\":\\{\"x\":(\\d+),\"y\":(\\d+)\\},\"targetElementId\":\"([^\"]+)\"";
+        String regex = "\"type\":\"([^\"]+)\",\"timestamp\":\"([^\"]+)\",\"coordinates\":\\{\"x\":([\\d.]+),\"y\":([\\d.]+)\\}(?:,\"targetElementId\":\"?([^\",}]+)\"?)?(?:,\"direction\":\"?([^\",}]+)\"?)?";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(jsonLogs);
@@ -44,9 +44,10 @@ public class LogsServiceImpl implements LogsService{
         while (matcher.find()) {
             String type = matcher.group(1);
             String timestamp = matcher.group(2);
-            int x = Integer.parseInt(matcher.group(3));
-            int y = Integer.parseInt(matcher.group(4));
+            float x = (float) Double.parseDouble(matcher.group(3));
+            float y = (float) Double.parseDouble(matcher.group(4));
             String targetElementId = matcher.group(5);
+            String direction = matcher.group(6);
 
             resultList.add(
                     new Logs(
@@ -54,6 +55,7 @@ public class LogsServiceImpl implements LogsService{
                             timestampConverter(timestamp),
                             x,
                             y,
+                            direction,
                             targetElementId
                     )
             );

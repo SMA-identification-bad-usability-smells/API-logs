@@ -27,19 +27,23 @@ public class Logs {
     private LocalDateTime timestamp;
 
     @Column(name = "coordinatesX", nullable = false)
-    private int coordinatesX;
+    private float coordinatesX;
 
     @Column(name = "coordinatesY", nullable = false)
-    private int coordinatesY;
+    private float coordinatesY;
+
+    @Column(name = "direction")
+    private String direction;
 
     @Column(name = "target_element_id")
     private String targetElementId;
 
-    public Logs(String type, LocalDateTime timestamp, int coordinatesX, int coordinatesY, String targetElementId) {
+    public Logs(String type, LocalDateTime timestamp, float coordinatesX, float coordinatesY, String direction, String targetElementId) {
         this.type = type;
         this.timestamp = timestamp;
         this.coordinatesX = coordinatesX;
         this.coordinatesY = coordinatesY;
+        this.direction = direction;
         this.targetElementId = targetElementId;
     }
 }

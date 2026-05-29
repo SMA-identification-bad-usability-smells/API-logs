@@ -27,6 +27,7 @@ public class LogsController {
 
     @PostMapping("/")
     public ResponseEntity<EntityModel<Logs>> createLog(@RequestBody @Valid LogsDTO newLogsDTO){
+        System.out.println(newLogsDTO.toString());
         logsService.createLogs(newLogsDTO);
         return ResponseEntity.ok().build();
     }
