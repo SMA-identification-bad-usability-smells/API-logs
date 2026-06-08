@@ -5,11 +5,13 @@ import com.api.logs.domain.logs.Logs;
 import com.api.logs.domain.logs.LogsDTO;
 import com.api.logs.services.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import jakarta.validation.Valid;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/logs")
@@ -25,10 +27,17 @@ public class LogsController {
         this.logsService = logsService;
     }
 
-    @PostMapping("/")
+    @PostMapping("")
     public ResponseEntity<EntityModel<Logs>> createLog(@RequestBody @Valid LogsDTO newLogsDTO){
-        System.out.println(newLogsDTO.toString());
         logsService.createLogs(newLogsDTO);
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping("")
+    public CollectionModel<EntityModel<Logs>> getAllLogs(){
+        List<EntityModel<Logs>> logsEntityModel = logsService.getAllLogs().stream()
+                .map(assembler::toModel)
+                .toList();
+        return CollectionModel.of(logsEntityModel);
     }
 }

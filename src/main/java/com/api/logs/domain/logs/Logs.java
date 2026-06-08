@@ -38,7 +38,13 @@ public class Logs {
     @Column(name = "target_element_id")
     private String targetElementId;
 
-    public Logs(String type, LocalDateTime timestamp, float coordinatesX, float coordinatesY, String direction, String targetElementId) {
+    public Logs(
+            String type,
+            LocalDateTime timestamp,
+            float coordinatesX,
+            float coordinatesY,
+            String direction,
+            String targetElementId) {
         this.type = type;
         this.timestamp = timestamp;
         this.coordinatesX = coordinatesX;

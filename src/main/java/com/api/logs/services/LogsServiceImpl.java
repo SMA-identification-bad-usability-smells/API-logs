@@ -25,10 +25,18 @@ public class LogsServiceImpl implements LogsService{
     public void createLogs(LogsDTO newLogsDTO) {
         try{
             List<Logs> logs = parseLogString(newLogsDTO.getContent());
-//            System.out.println(logs.getFirst().toString());
             logs.forEach(log ->
                     logsRepository.save(log));
         } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
+    public List<Logs> getAllLogs() {
+        try{
+            return logsRepository.findAll();
+        } catch (RuntimeException e) {
             throw new RuntimeException(e);
         }
     }
