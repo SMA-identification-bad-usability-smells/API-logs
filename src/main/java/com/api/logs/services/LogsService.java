@@ -9,4 +9,6 @@ public interface LogsService {
     void createLogs(LogsDTO newLogs);
 
     List<Logs> getAllLogs();
+
+    void markLogsAsReceived(List<Long> idsList);
 }

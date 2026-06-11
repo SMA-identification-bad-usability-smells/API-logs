@@ -41,6 +41,22 @@ public class LogsServiceImpl implements LogsService{
         }
     }
 
+    @Override
+    public void markLogsAsReceived(List<Long> idsList) {
+        try {
+            idsList.forEach( id -> {
+                var log = logsRepository.findById(id).orElse(null);
+
+                if(log != null){
+                    log.setNormalized(true);
+                    logsRepository.save(log);
+                }
+            });
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public static List<Logs> parseLogString(String jsonLogs) {
         List<Logs> resultList = new ArrayList<>();
 

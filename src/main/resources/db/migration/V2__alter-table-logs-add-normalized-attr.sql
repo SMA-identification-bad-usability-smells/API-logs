@@ -1,0 +1,2 @@
+ALTER TABLE `logs`
+    ADD `normalized` BOOLEAN NOT NULL DEFAULT FALSE;

@@ -38,6 +38,9 @@ public class Logs {
     @Column(name = "target_element_id")
     private String targetElementId;
 
+    @Column(name = "normalized")
+    private boolean normalized;
+
     public Logs(
             String type,
             LocalDateTime timestamp,
@@ -51,5 +54,6 @@ public class Logs {
         this.coordinatesY = coordinatesY;
         this.direction = direction;
         this.targetElementId = targetElementId;
+        this.normalized = false;
     }
 }
