@@ -1,8 +1,8 @@
 CREATE TABLE `normalizedlogs` (
     `id` BIGINT,
     `frequency` BIGINT NOT NULL,
-    `interactionType` TEXT NOT NULL,
+    `interaction_type` TEXT NOT NULL,
     `time` DATETIME NOT NULL,
-    `gestureDirection` TEXT,
+    `gesture_direction` TEXT,
     CONSTRAINT NORMALIZEDLOGS_PK PRIMARY KEY (`id`)
 ) ENGINE InnoDB;

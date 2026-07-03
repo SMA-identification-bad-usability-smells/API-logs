@@ -21,7 +21,7 @@ public class NormalizedLogs {
     @Column(name = "id", nullable = false)
     private long id;
 
-    @Column(name = "interactionType")
+    @Column(name = "interaction_type")
     private String interactionType;
 
     @Column(name = "time", nullable = false)
@@ -30,6 +30,6 @@ public class NormalizedLogs {
     @Column(name = "frequency", nullable = false)
     private long frequency;
 
-    @Column(name = "gestureDirection")
+    @Column(name = "gesture_direction")
     private String gestureDirection;
 }
