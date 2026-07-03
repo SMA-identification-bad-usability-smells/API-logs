@@ -1,4 +1,4 @@
-package com.api.logs.services;
+package com.api.logs.services.logs;
 
 import com.api.logs.domain.logs.Logs;
 import com.api.logs.domain.logs.LogsDTO;
@@ -25,8 +25,7 @@ public class LogsServiceImpl implements LogsService{
     public void createLogs(LogsDTO newLogsDTO) {
         try{
             List<Logs> logs = parseLogString(newLogsDTO.getContent());
-            logs.forEach(log ->
-                    logsRepository.save(log));
+            logs.forEach(logsRepository::save);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -60,7 +59,11 @@ public class LogsServiceImpl implements LogsService{
     public static List<Logs> parseLogString(String jsonLogs) {
         List<Logs> resultList = new ArrayList<>();
 
-        String regex = "\"type\":\"([^\"]+)\",\"timestamp\":\"([^\"]+)\",\"coordinates\":\\{\"x\":([\\d.]+),\"y\":([\\d.]+)\\}(?:,\"targetElementId\":\"?([^\",}]+)\"?)?(?:,\"direction\":\"?([^\",}]+)\"?)?";
+        String regex = "\"type\":\"([^\"]+)\"," +
+                "\"timestamp\":\"([^\"]+)\"," +
+                "\"coordinates\":\\{\"x\":([\\d.]+),\"y\":([\\d.]+)\\}(?:," +
+                "\"targetElementId\":\"?([^\",}]+)\"?)?(?:," +
+                "\"direction\":\"?([^\",}]+)\"?)?";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(jsonLogs);
@@ -89,8 +92,6 @@ public class LogsServiceImpl implements LogsService{
     }
 
     public static LocalDateTime timestampConverter(String timestamp){
-        Instant instant = Instant.parse(timestamp);
-
-        return LocalDateTime.ofInstant(instant, ZoneId.of("UTC"));
+        return LocalDateTime.parse(timestamp);
     }
 }

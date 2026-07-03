@@ -4,7 +4,7 @@ import com.api.logs.assemblers.LogsModelAssembler;
 import com.api.logs.domain.logs.Logs;
 import com.api.logs.domain.logs.LogsDTO;
 import com.api.logs.domain.logs.LogsIdsDTO;
-import com.api.logs.services.LogsService;
+import com.api.logs.services.logs.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;

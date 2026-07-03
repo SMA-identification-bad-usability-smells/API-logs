@@ -1,4 +1,4 @@
-package com.api.logs.services;
+package com.api.logs.services.logs;
 
 import com.api.logs.domain.logs.Logs;
 import com.api.logs.domain.logs.LogsDTO;
