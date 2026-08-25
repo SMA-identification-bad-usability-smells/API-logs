@@ -1,0 +1,2 @@
+ALTER TABLE `logs`
+    ADD `user` BIGINT NOT NULL;
