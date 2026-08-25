@@ -85,14 +85,15 @@ public class LogsServiceImpl implements LogsService{
         }
     }
 
-    public static List<Logs> parseLogString(String jsonLogs) {
+    private static List<Logs> parseLogString(String jsonLogs) {
         List<Logs> resultList = new ArrayList<>();
 
         String regex = "\"type\":\"([^\"]+)\"," +
                 "\"timestamp\":\"([^\"]+)\"," +
                 "\"coordinates\":\\{\"x\":([\\d.]+),\"y\":([\\d.]+)\\}(?:," +
                 "\"targetElementId\":\"?([^\",}]+)\"?)?(?:," +
-                "\"direction\":\"?([^\",}]+)\"?)?";
+                "\"direction\":\"?([^\",}]+)\","
+                +"\"user\":\"([^\"]+)\"?)?";
 
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(jsonLogs);
@@ -121,7 +122,7 @@ public class LogsServiceImpl implements LogsService{
         return resultList;
     }
 
-    public static LocalDateTime timestampConverter(String timestamp){
+    private static LocalDateTime timestampConverter(String timestamp){
         return LocalDateTime.parse(timestamp);
     }
 }
