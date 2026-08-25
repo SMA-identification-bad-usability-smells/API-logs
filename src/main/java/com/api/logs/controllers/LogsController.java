@@ -60,6 +60,15 @@ public class LogsController {
         return CollectionModel.of(logsEntityModel);
     }
 
+    @GetMapping("/{user}/unchecked")
+    public CollectionModel<EntityModel<Logs>> getAllUncheckedLogs(@PathVariable Long user){
+        List<EntityModel<Logs>> logsEntityModel = logsService
+                .getAllUncheckedLogsByUser(user, false).stream()
+                .map(assembler::toModel)
+                .toList();
+
+        return CollectionModel.of(logsEntityModel);
+    }
 
     @PutMapping("/ids/all")
     public void markLogsAsReceived(@RequestBody LogsIdsDTO logsIdsDTO){

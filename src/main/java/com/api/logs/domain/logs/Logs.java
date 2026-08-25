@@ -50,7 +50,8 @@ public class Logs {
             float coordinatesX,
             float coordinatesY,
             String direction,
-            String targetElementId) {
+            String targetElementId,
+            boolean normalized) {
         this.type = type;
         this.timestamp = timestamp;
         this.coordinatesX = coordinatesX;
@@ -58,5 +59,9 @@ public class Logs {
         this.direction = direction;
         this.targetElementId = targetElementId;
         this.normalized = false;
+    }
+
+    public boolean getNormalized(){
+        return this.normalized;
     }
 }

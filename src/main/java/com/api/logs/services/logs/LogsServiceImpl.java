@@ -59,6 +59,17 @@ public class LogsServiceImpl implements LogsService{
     }
 
     @Override
+    public List<Logs> getAllUncheckedLogsByUser(Long user, boolean normalized) {
+        try {
+            return logsRepository.findByUser(user).stream()
+                    .filter( log -> log.getNormalized() == normalized)
+                    .toList();
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void markLogsAsReceived(List<Long> idsList) {
         try {
             idsList.forEach( id -> {
@@ -101,7 +112,8 @@ public class LogsServiceImpl implements LogsService{
                             x,
                             y,
                             direction,
-                            targetElementId
+                            targetElementId,
+                            false
                     )
             );
         }
