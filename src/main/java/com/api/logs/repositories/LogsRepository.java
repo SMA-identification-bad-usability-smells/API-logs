@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface LogsRepository extends JpaRepository<Logs, Long> {
     public List<Logs> findByNormalized(boolean normalized);
+
+    public List<Logs> findByUser(Long user);
 }

@@ -43,6 +43,14 @@ public class LogsController {
         return CollectionModel.of(logsEntityModel);
     }
 
+    @GetMapping("/{user}")
+    public CollectionModel<EntityModel<Logs>> getAllLogsByUser(@PathVariable Long user){
+        List<EntityModel<Logs>> logsEntityModel = logsService.getAllLogsByUser(user).stream()
+                .map(assembler::toModel)
+                .toList();
+        return CollectionModel.of(logsEntityModel);
+    }
+
     @GetMapping("/unchecked")
     public CollectionModel<EntityModel<Logs>> getAllUncheckedLogs(){
         List<EntityModel<Logs>> logsEntityModel = logsService.getAllUncheckedLogs(false).stream()

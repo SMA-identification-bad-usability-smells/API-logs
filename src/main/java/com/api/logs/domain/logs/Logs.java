@@ -20,6 +20,9 @@ public class Logs {
     @Column(name = "id", nullable = false)
     private long id;
 
+    @Column(name="user", nullable = false)
+    private long user;
+
     @Column(name = "type")
     private String type;
 
