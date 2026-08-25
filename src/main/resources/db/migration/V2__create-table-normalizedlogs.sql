@@ -1,4 +1,4 @@
-CREATE TABLE `normalizedlogs` (
+CREATE TABLE IF NOT EXISTS `normalizedlogs` (
     `id` BIGINT,
     `frequency` BIGINT NOT NULL,
     `interaction_type` TEXT NOT NULL,
