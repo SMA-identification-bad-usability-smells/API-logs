@@ -41,6 +41,15 @@ public class LogsServiceImpl implements LogsService{
     }
 
     @Override
+    public List<Logs> getAllUncheckedLogs(boolean normalized) {
+        try {
+            return logsRepository.findByNormalized(normalized);
+        } catch (RuntimeException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Override
     public void markLogsAsReceived(List<Long> idsList) {
         try {
             idsList.forEach( id -> {

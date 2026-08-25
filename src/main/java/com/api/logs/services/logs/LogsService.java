@@ -10,5 +10,7 @@ public interface LogsService {
 
     List<Logs> getAllLogs();
 
+    List<Logs> getAllUncheckedLogs(boolean normalized);
+
     void markLogsAsReceived(List<Long> idsList);
 }
