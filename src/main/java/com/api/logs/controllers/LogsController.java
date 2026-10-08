@@ -2,7 +2,7 @@ package com.api.logs.controllers;
 
 import com.api.logs.assemblers.LogsModelAssembler;
 import com.api.logs.domain.logs.Logs;
-import com.api.logs.domain.logs.LogsDTO;
+import com.api.logs.domain.logs.LogsEntryDTO;
 import com.api.logs.domain.logs.LogsIdsDTO;
 import com.api.logs.services.logs.LogsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class LogsController {
     }
 
     @PostMapping("")
-    public ResponseEntity<EntityModel<Logs>> createLog(@RequestBody @Valid LogsDTO newLogsDTO){
+    public ResponseEntity<EntityModel<Logs>> createLog(@RequestBody @Valid List<LogsEntryDTO> newLogsDTO){
         logsService.createLogs(newLogsDTO);
         return ResponseEntity.ok().build();
     }

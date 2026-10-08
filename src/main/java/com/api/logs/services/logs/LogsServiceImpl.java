@@ -1,19 +1,13 @@
 package com.api.logs.services.logs;
 
 import com.api.logs.domain.logs.Logs;
-import com.api.logs.domain.logs.LogsDTO;
+import com.api.logs.domain.logs.LogsEntryDTO;
 import com.api.logs.repositories.LogsRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.time.Instant;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 @Component
 @Slf4j
@@ -22,9 +16,20 @@ public class LogsServiceImpl implements LogsService{
     private LogsRepository logsRepository;
 
     @Override
-    public void createLogs(LogsDTO newLogsDTO) {
+    public void createLogs(List<LogsEntryDTO> newLogsDTO) {
         try{
-            List<Logs> logs = parseLogString(newLogsDTO.getContent());
+            List<Logs> logs = newLogsDTO.stream().map(
+                    log ->
+                         new Logs(
+                                log.getUser(),
+                                log.getType(),
+                                log.getTimestamp(),
+                                log.getCoordinatesX(),
+                                log.getCoordinatesY(),
+                                log.getDirection(),
+                                log.getTargetElementId()
+                        )
+                    ).toList();
             logs.forEach(logsRepository::save);
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -83,46 +88,5 @@ public class LogsServiceImpl implements LogsService{
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private static List<Logs> parseLogString(String jsonLogs) {
-        List<Logs> resultList = new ArrayList<>();
-
-        String regex = "\"type\":\"([^\"]+)\"," +
-                "\"timestamp\":\"([^\"]+)\"," +
-                "\"coordinates\":\\{\"x\":([\\d.]+),\"y\":([\\d.]+)\\}(?:," +
-                "\"targetElementId\":\"?([^\",}]+)\"?)?(?:," +
-                "\"direction\":\"?([^\",}]+)\","
-                +"\"user\":\"([^\"]+)\"?)?";
-
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(jsonLogs);
-
-        while (matcher.find()) {
-            String type = matcher.group(1);
-            String timestamp = matcher.group(2);
-            float x = (float) Double.parseDouble(matcher.group(3));
-            float y = (float) Double.parseDouble(matcher.group(4));
-            String targetElementId = matcher.group(5);
-            String direction = matcher.group(6);
-
-            resultList.add(
-                    new Logs(
-                            type,
-                            timestampConverter(timestamp),
-                            x,
-                            y,
-                            direction,
-                            targetElementId,
-                            false
-                    )
-            );
-        }
-
-        return resultList;
-    }
-
-    private static LocalDateTime timestampConverter(String timestamp){
-        return LocalDateTime.parse(timestamp);
     }
 }

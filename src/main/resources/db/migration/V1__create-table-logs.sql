@@ -7,6 +7,6 @@ CREATE TABLE IF NOT EXISTS `logs` (
     `direction` TEXT,
     `target_element_id` TEXT NOT NULL,
     `normalized` BOOLEAN NOT NULL DEFAULT FALSE,
-    `user` BIGINT NOT NULL,
+    `user` VARCHAR(32) NOT NULL,
     CONSTRAINT LOGS_PK PRIMARY KEY (`id`)
 ) ENGINE InnoDB;

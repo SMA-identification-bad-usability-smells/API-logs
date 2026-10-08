@@ -1,12 +1,12 @@
 package com.api.logs.services.logs;
 
 import com.api.logs.domain.logs.Logs;
-import com.api.logs.domain.logs.LogsDTO;
+import com.api.logs.domain.logs.LogsEntryDTO;
 
 import java.util.List;
 
 public interface LogsService {
-    void createLogs(LogsDTO newLogs);
+    void createLogs(List<LogsEntryDTO> newLogs);
 
     List<Logs> getAllLogs();
 

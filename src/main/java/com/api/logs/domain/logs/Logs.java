@@ -6,6 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 
 @Getter
@@ -21,13 +22,13 @@ public class Logs {
     private long id;
 
     @Column(name="user", nullable = false)
-    private long user;
+    private String user;
 
     @Column(name = "type")
     private String type;
 
     @Column(name = "timestamp", nullable = false)
-    private LocalDateTime timestamp;
+    private Instant timestamp;
 
     @Column(name = "coordinatesX", nullable = false)
     private float coordinatesX;
@@ -45,13 +46,14 @@ public class Logs {
     private boolean normalized;
 
     public Logs(
+            String user,
             String type,
-            LocalDateTime timestamp,
+            Instant timestamp,
             float coordinatesX,
             float coordinatesY,
             String direction,
-            String targetElementId,
-            boolean normalized) {
+            String targetElementId) {
+        this.user = user;
         this.type = type;
         this.timestamp = timestamp;
         this.coordinatesX = coordinatesX;
